@@ -1,4 +1,4 @@
-export function getAppointmentsForDay(state, day) {
+export default function getAppointmentsForDay(state, day) {
   
   let results = [];
   
@@ -15,5 +15,3 @@ export function getAppointmentsForDay(state, day) {
   
   return results;
 };
-
-module.exports = { getAppointmentsForDay };
