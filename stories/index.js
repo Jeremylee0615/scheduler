@@ -5,12 +5,18 @@ import { action } from "@storybook/addon-actions";
 
 import "index.scss";
 
+///////Button Components///////
 import Button from "components/Button";
+
+///////DayList/DayListItem Components///////
 import DayListItem from "components/DayListItem";
 import DayList from "components/DayList";
+
+///////InterviewerList/InterviewerListItem Components///////
 import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from "components/InterviewerList";
 
+///////Appointment Components///////
 import Appointment from "components/Appointment/index.js";
 import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
@@ -18,9 +24,10 @@ import Show from "components/Appointment/Show";
 import Confirm from "components/Appointment/Confirm";
 import Status from "components/Appointment/Status";
 import Error from "components/Appointment/Error";
+import Form from "components/Appointment/Form";
 
 
-
+///////Button Stories///////
 storiesOf("Button", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
@@ -38,6 +45,7 @@ storiesOf("Button", module)
   ));
 
 
+///////DayListItem Stories///////
 storiesOf("DayListItem", module) //Initiates Storybook and registers our DayListItem component
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
@@ -49,7 +57,8 @@ storiesOf("DayListItem", module) //Initiates Storybook and registers our DayList
     <DayListItem name="Tuesday" setDay={action("setDay")} spots={5} /> // action() allows us to create a callback that appears in the actions panel when clicked
   ));
 
-  
+
+///////DayList Stories///////  
 const days = [
   {
     id: 1,
@@ -83,6 +92,7 @@ storiesOf("DayList", module)
   ));
 
 
+///////InterviewerListItem Stories///////    
 const interviewer = {
     id: 1,
     name: "Sylvia Palmer",
@@ -118,6 +128,7 @@ storiesOf("InterviewerListItem", module)
 ));
 
 
+///////InterviewerList Stories///////    
 const interviewers = [
   { id: 1, name: "Sylvia Palmer", avatar: "https://i.imgur.com/LpaY82x.png" },
   { id: 2, name: "Tori Malcolm", avatar: "https://i.imgur.com/Nmx0Qxo.png" },
@@ -149,6 +160,7 @@ storiesOf("InterviewerList", module)
   ));
 
 
+///////Appointment Stories///////  
 storiesOf("Appointment", module)
   .addParameters({
     backgrounds: [{ name: "white", value: "#fff", default: true }]
@@ -161,3 +173,5 @@ storiesOf("Appointment", module)
   .add("Confirm", () => <Confirm message="Delete the appointment?" onConfirm={action("onConfirm")} onCancel={action("onCancel")}/>)
   .add("Status", () => <Status message="Deleting"/>)
   .add("Error", () => <Error message="Could not delete appointment." onClose={action("onClose")}/>)
+  .add("Create", () => <Form interviewers={interviewers} onSave={action("onSave")} onCancel={action("onCancel")}/>)
+  .add("Edit", () => <Form interviewers={interviewers} onSave={action("onSave")} onCancel={action("onCancel")} name="Jeremy Lee" interviewer="1"/>)
