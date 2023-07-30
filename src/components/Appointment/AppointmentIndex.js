@@ -35,7 +35,7 @@ export default function Appointment(props) {
       interviewer
     };
     
-    transition(SAVING);
+    transition(SAVING, true);
     props.bookInterview(props.id, interview)
     //axios to return promise, use .then() - callback//
     .then(()=>{
@@ -48,7 +48,7 @@ export default function Appointment(props) {
 
   function remove(){
     
-    transition(DELETE);
+    transition(DELETE, true);
     props.cancelInterview(props.id)
     .then(()=> 
       transition(EMPTY)
