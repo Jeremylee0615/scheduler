@@ -9,7 +9,7 @@ export default function Show(props) {
           {props.interview && props.interview.student}
         </h2>
       <section className="interviewer">
-        <h4 className="text--light">Interviewer</h4>
+        <h4 className="text--light">{props.interviewer}</h4>
         <h3 className="text--regular">
           {props.interview && props.interview.interviewer && props.interview.interviewer.name}
         </h3>
@@ -21,6 +21,7 @@ export default function Show(props) {
           className="appointment__actions-button"
           src="images/edit.png"
           alt="Edit"
+          onClick={props.onEdit}
         />
         <img
           className="appointment__actions-button"
