@@ -6,7 +6,7 @@ import "components/Application.scss";
 
 import DayList from "components/DayList";
 import Appointment from "./Appointment/AppointmentIndex";
-import getAppointmentsForDay from "../helpers/selectors";
+import { getAppointmentsForDay, getInterview } from "../helpers/selectors";
 
 
 export default function Application(props) {
@@ -14,24 +14,43 @@ export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
     days: [],
-    appointments: {}
+    appointments: {},
+    interviwer: {}
   });
-  const dailyAppointments = getAppointmentsForDay(state, state.day);
+
   const setDay = day => setState({ ...state, day });
 
   useEffect(() => {
     const dayURL = "http://localhost:8001/api/days";
     const appointmentURL="http://localhost:8001/api/appointments";
-      Promise.all([
+    const interviewersURL = "http://localhost:8001/api/interviewers";  
+    
+    Promise.all([
         axios.get(dayURL),
-        axios.get(appointmentURL)
+        axios.get(appointmentURL),
+        axios.get(interviewersURL)
       ]).then((all) => {
         setState(prev => ({
           days: all[0].data,
-          appointments: all[1].data
+          appointments: all[1].data,
+          interviwers: all[2].data
         }));
       });
   }, []);
+  
+  const appointments = getAppointmentsForDay(state, state.day);
+  const schedule = appointments.map((appointment) => {
+    
+    return (
+      <Appointment
+        key={appointment.id}
+        id={appointment.id}
+        time={appointment.time}
+        interview={appointment.interview}
+      />
+    );
+  });
+
   
   return (
     <main className="layout">
@@ -56,11 +75,7 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {dailyAppointments.map(appointment => 
-        (<Appointment 
-          key={appointment.id} 
-          {...appointment} 
-        />))}
+        { schedule }
         <Appointment key="last" time="5pm" />
       </section> 
     </main>
