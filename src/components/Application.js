@@ -38,6 +38,7 @@ export default function Application(props) {
       });
   }, []);
   
+  //Creating appointment//
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -60,6 +61,29 @@ export default function Application(props) {
     })
   };
 
+  //Deleting appointment//
+  function cancelInterview(id){
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    const url =`http://localhost:8001/api/appointments/${id}`;
+
+    let req={
+      url,
+      method: 'DELETE',
+      //data: appointment
+    }
+
+    return axios(req).then(response =>{
+      setState({...state, appointments});
+    })
+  };
+
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
   const schedule = appointments.map((appointment) => {
@@ -73,6 +97,7 @@ export default function Application(props) {
         interview={interview}
         interviewers={interviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
