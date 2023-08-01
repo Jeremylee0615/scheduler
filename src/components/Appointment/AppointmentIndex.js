@@ -35,7 +35,7 @@ export default function Appointment(props) {
       interviewer
     };
     
-    transition(SAVING, true);
+    transition(SAVING);
     props.bookInterview(props.id, interview)
     //axios to return promise, use .then() - callback//
     .then(()=>{
@@ -96,7 +96,7 @@ export default function Appointment(props) {
       {mode === EDIT && (
         <Form 
           student={props.interview.student}
-          interviewer={props.interviewer} 
+          interviewer={props.interview.interviewer.id} 
           interviewers={props.interviewers}
           onSave={ save }
           onCancel={ back }
