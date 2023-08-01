@@ -9,7 +9,6 @@ export default function useApplicationData() {
     appointments: {},
     interviewers: {}
   });
-
   const setDay = day => {
     setState({ ...state, day })
   };
@@ -33,15 +32,30 @@ export default function useApplicationData() {
       });
   }, []);
   
-  function findDay (day) {
-    const dayOfWeek  = {
-      Monday: 0,
-      Tuesday: 1,
-      Wednesday: 2,
-      Thursday: 3,
-      Friday: 4,
-    }
-    return dayOfWeek[day]
+
+  function updateSpots (state, appointments) {
+  ///loop thru arrays of selectedDay and find the specific day that the user is on//
+    const dayOfWeek = state.days.find((selectedDay)=>{
+      return selectedDay.name === state.day
+    })
+   // add 1 to the spot if there is no interview in the appointment//  
+    let spots = 0
+    dayOfWeek.appointments.forEach(appointment =>{
+      if(!appointments[appointment].interview){
+        spots ++
+      }
+    });
+    // day that has been updated with new spots remaining//
+    let newDay  = {
+      ...dayOfWeek,
+      spots
+    } 
+    // return the updated days//
+    const updatedDays = state.days.map((dayObj)=>{
+      return dayObj.name === state.day ? newDay : dayObj
+
+    })
+    return updatedDays
   }
 
   //Creating appointment//
@@ -54,34 +68,12 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-
-    //inital spots available for the selectedday//
-    const dayOfWeek = findDay(state.day)
-      let day  = {
-        ...state.days[dayOfWeek],
-        spots: state.days[dayOfWeek]
-      }
-      //spots being updated by each time by - 1 when spot is taken after a new appointment is created
-      if (!state.appointments[id].interview) {
-        day = {
-          ...state.days[dayOfWeek],
-          spots: state.days[dayOfWeek].spots - 1
-        }
-      //no changes on spots remaining
-      } else {
-        day = {
-          ...state.days[dayOfWeek],
-          spots: state.days[dayOfWeek].spots 
-        }
-      }
-    //update new spots reamining//
-    let days  = state.days
-    days[dayOfWeek] = day
-
+    
+    const updated = updateSpots(state, appointments)
     const url = `/api/appointments/${id}`;
 
-    return axios.put(url, appointment).then(response => {
-      setState({...state, appointments, days})
+    return axios.put(url, appointment).then(() => {
+      setState({...state, appointments, days: updated})
     })
   };
 
@@ -95,26 +87,12 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    //inital spots available for the selectedday//
-    const dayOfWeek = findDay(state.day)
-      //spots being updated by each time by + 1 when an existing appointment gets deleted on the selected day.
-      const day = {
-        ...state.days[dayOfWeek],
-        spots: state.days[dayOfWeek].spots + 1
-      }
-    //update new spots reamining//
-    let days = state.days
-    days[dayOfWeek] = day;
+    const updated = updateSpots(state, appointments)
     
     const url =`/api/appointments/${id}`;
 
-    let req={
-      url,
-      method: 'DELETE',
-    }
-
-    return axios(req).then(response =>{
-      setState({...state, appointments});
+    return axios.delete(url).then(() =>{
+      setState({...state, appointments, days: updated });
     })
   };
 
