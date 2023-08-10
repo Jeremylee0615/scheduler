@@ -26,18 +26,18 @@ npm run storybook
 ## Final Product
 
 #### Main Page 
-!["Main Page"](images\scheduler_main_page.PNG)
+!["Main Page"](./images/scheduler_main_page.PNG)
 
 #### Creating appointment 
-!["Creating appointment"](images\scheduler_creating_appointment.PNG)
+!["Creating appointment"](./images/scheduler_creating_appointment.PNG)
 
 #### Editing appointment 
-!["Editing appointment_1"](images\scheduler_editing_appointment_1.PNG)
-!["Editing appointment_2"](images\scheduler_editing_appointment_2.PNG)
-!["Editing appointment_3"](images\scheduler_editing_appointment_3.PNG)
+!["Editing appointment_1"](./images/scheduler_editing_appointment_1.PNG)
+!["Editing appointment_2"](./images/scheduler_editing_appointment_2.PNG)
+!["Editing appointment_3"](./images/scheduler_editing_appointment_3.PNG)
 
 #### Deleting appointment 
-!["Creating appointment"](images\scheduler_deleting_appointment.PNG)
+!["Creating appointment"](./images/scheduler_deleting_appointment.PNG)
 
 
 ## Dependencies
