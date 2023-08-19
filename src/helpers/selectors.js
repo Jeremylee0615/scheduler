@@ -1,3 +1,10 @@
+/**
+ * This function returns appointments within the selected day from Monday ~ Friday
+ * @param {*} state 
+ * @param {*} day 
+ * @returns 
+ */
+
 function getAppointmentsForDay(state, day) {
 
   let results = [];
@@ -15,6 +22,12 @@ function getAppointmentsForDay(state, day) {
 
   return results;
 }
+/**
+ * This function returns the data of selected interview
+ * @param {*} state 
+ * @param {*} interview 
+ * @returns 
+ */
 function getInterview(state, interview) {
 
   if (!interview) {
@@ -28,7 +41,12 @@ function getInterview(state, interview) {
     interviewer: interviewrInfo
   }
 };
-
+/**
+ * This function returns interviewers that are available for the selected days from Monday ~ Friday
+ * @param {*} state 
+ * @param {*} day 
+ * @returns 
+ */
 function getInterviewersForDay(state, day) {
 
   let results = [];
